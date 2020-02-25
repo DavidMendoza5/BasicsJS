@@ -15,6 +15,10 @@ getUsuarios()
     .then(data => data.json())
     .then(user => {
         mostrarUsuario(user.data);
+        return getInfo();
+    })
+    .then(data => {
+        console.log(data);
     })
 
 function getUsuarios() {
@@ -58,4 +62,19 @@ function mostrarUsuario(user) {
    div_usuario.appendChild(datos);
     */
     document.querySelector(".loading").style.display = 'none';
+}
+
+function getInfo() {
+    var profesor = {
+        nombre: 'Pepe',
+        apellidos: 'Mina Simpson'
+    }
+
+    return new Promise((resolve, reject) => {
+        var profesor_string = JSON.stringify(profesor);
+
+        if(typeof profesor_string != 'string') return reject('Error');
+        
+        return resolve(profesor_string);
+    })
 }
