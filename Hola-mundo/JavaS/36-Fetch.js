@@ -2,23 +2,60 @@
 
 // Fetch (ajax) y peticiones a servicios / api rest
 
-var div_usuarios = document.querySelector("#usuarios")
+var div_usuarios = document.querySelector("#usuarios");
+var div_usuario = document.querySelector("#usuario");
 
-var usuarios = [];
 
-fetch('https://reqres.in/api/users')
+getUsuarios()
     .then(data => data.json())
     .then(users => {
-        usuarios = users.data;
-        console.log(usuarios);
+        listadoUsuario(users.data);
+        return getUsuario();
+    })
+    .then(data => data.json())
+    .then(user => {
+        mostrarUsuario(user.data);
+    })
 
-        usuarios.map((user, i) => {
-            let nombre = document.createElement('h2');
+function getUsuarios() {
+    return fetch('https://reqres.in/api/users')
+    //return fetch('http://localhost:3800/api/obtenerDocentes')
+}
 
-            nombre.innerHTML = i + user.first_name + user.last_name;
+function getUsuario() {
+    return fetch('https://reqres.in/api/users/2')
+    //return fetch('http://localhost:3800/api/obtenerDocentes')
+}
 
-            div_usuarios.appendChild(nombre);
+function listadoUsuario(usuarios) {
+    usuarios.map((user, i) => {
+        let nombre = document.createElement('h2');
 
-            document.querySelector(".loading").style.display = 'none';
-        }); // Es lo mismo que el for each
-    });
+        nombre.innerHTML = i + user.first_name + user.last_name;
+
+        div_usuarios.appendChild(nombre);
+
+        document.querySelector(".loading").style.display = 'none';
+    }); // Es lo mismo que el for each
+}
+
+function mostrarUsuario(user) {
+    console.log(user);
+
+    let nombre = document.createElement('h3');
+    let avatar = document.createElement('img');
+
+    nombre.innerHTML = user.first_name + user.last_name;
+    avatar.src = user.avatar;
+    avatar.width = '100'; 
+
+    div_usuario.appendChild(nombre);
+    div_usuario.appendChild(avatar);
+
+    /*
+   //let datos = document.createElement('h3');
+   //datos.innerHTML = user.data;
+   div_usuario.appendChild(datos);
+    */
+    document.querySelector(".loading").style.display = 'none';
+}
