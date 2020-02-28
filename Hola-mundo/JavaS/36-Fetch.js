@@ -20,6 +20,9 @@ getUsuarios()
     .then(data => {
         console.log(data);
     })
+    .catch(error => {
+        console.log(error); // El cath nos permite agarrar los errores y con el console.log podemos mostrarlos, igual se puede poner un alert
+    })
 
 function getUsuarios() {
     return fetch('https://reqres.in/api/users')
